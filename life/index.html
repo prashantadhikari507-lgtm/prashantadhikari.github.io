@@ -1,12 +1,9 @@
 <section id="exams">
   <div class="exam-header">
+    <a href="Prashant_Adhikari_SOA.pdf" target="_blank">
+      <img src="SOA.webp" alt="Society of Actuaries Logo" class="soa-logo">
+    </a>
     <h2>Society of Actuaries Exams Cleared</h2>
-    <div class="soa-logo">
-      <img src="https://www.soa.org/48ecb4/globalassets/assets/images/logos/soa-logo-primary.svg" 
-           alt="Society of Actuaries Logo" width="140">
-      <br>
-      <a href="Prashant_Adhikari_SOA.pdf" target="_blank" class="transcript-btn">View Official Transcript</a>
-    </div>
   </div>
 
   <div class="exam-stage" id="examStage"></div>
@@ -14,7 +11,7 @@
 
 <style>
   body {
-    background-color: #e8f2ff;
+    background-color: #e8f2ff; /* soft light blue */
     font-family: 'Lato', sans-serif;
     color: #003366;
     margin: 0;
@@ -23,48 +20,37 @@
     overflow-x: hidden;
   }
 
-  h2 {
-    font-size: 1.8em;
-    margin-bottom: 10px;
-  }
-
+  /* Header Section */
   .exam-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
     margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .exam-header h2 {
+    font-size: 1.8em;
+    color: #003366;
+    margin: 0;
   }
 
   .soa-logo {
-    text-align: center;
+    width: 160px;
+    height: auto;
+    transition: transform 0.3s ease;
   }
 
-  .soa-logo img {
-    max-width: 150px;
+  .soa-logo:hover {
+    transform: scale(1.05);
   }
 
-  .transcript-btn {
-    display: inline-block;
-    background-color: #003366;
-    color: #fff;
-    padding: 8px 14px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 14px;
-    margin-top: 8px;
-    transition: 0.3s;
-  }
-
-  .transcript-btn:hover {
-    background-color: #0055aa;
-  }
-
-  /* Stage layout */
+  /* Exam Display Area */
   .exam-stage {
     position: relative;
     width: 100%;
-    height: 400px;
+    height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,14 +58,18 @@
 
   .exam-card {
     position: absolute;
-    background-color: #ede7f6;
-    border-radius: 15px;
-    padding: 25px;
-    width: 320px;
-    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+    background-color: #ede7f6; /* light lavender */
+    border-radius: 20px;
+    padding: 30px;
+    width: 420px;
+    min-height: 220px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
     opacity: 0;
     transform: scale(0.8);
     transition: all 0.8s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .exam-card.active {
@@ -88,15 +78,21 @@
     z-index: 5;
   }
 
-  /* Positions for completed exams */
-  .pos1 { top: 20px; left: 20px; }
-  .pos2 { top: 20px; right: 20px; }
-  .pos3 { bottom: 20px; left: 20px; }
-  .pos4 { bottom: 20px; right: 20px; }
+  /* Corner positions for previous exams */
+  .pos1 { top: 30px; left: 30px; }
+  .pos2 { top: 30px; right: 30px; }
+  .pos3 { bottom: 30px; left: 30px; }
+  .pos4 { bottom: 30px; right: 30px; }
 
   @media (max-width: 800px) {
-    .exam-card { width: 85%; }
-    .exam-header { flex-direction: column; }
+    .exam-header {
+      justify-content: center;
+      text-align: center;
+    }
+    .exam-card {
+      width: 85%;
+      min-height: 200px;
+    }
   }
 </style>
 
@@ -139,32 +135,25 @@
   const cards = exams.map(exam => createCard(exam));
 
   function showNextExam() {
-    // Clear all active
     cards.forEach(c => c.classList.remove('active'));
-    
-    // Set positions for previous exams
+
+    // Reposition previous exams
     for (let i = 0; i < current; i++) {
       cards[i].className = 'exam-card ' + (positions[i % positions.length] || '');
       cards[i].style.opacity = 1;
-      cards[i].style.transform = 'scale(0.8)';
+      cards[i].style.transform = 'scale(0.85)';
       cards[i].style.zIndex = 1;
     }
 
-    // Show current active
+    // Activate current
     const activeCard = cards[current];
     activeCard.className = 'exam-card active';
 
-    // Increment index
     current++;
-    if (current >= cards.length) current = cards.length - 1; // stop at last one
+    if (current >= cards.length) clearInterval(interval);
   }
 
-  // Initial show
+  // Start animation
   showNextExam();
-
-  // Auto advance every 3 seconds until all are shown
-  const interval = setInterval(() => {
-    if (current < cards.length) showNextExam();
-    else clearInterval(interval);
-  }, 3000);
+  const interval = setInterval(showNextExam, 3000);
 </script>

@@ -1,0 +1,170 @@
+<section id="exams">
+  <div class="exam-header">
+    <h2>Society of Actuaries Exams Cleared</h2>
+    <div class="soa-logo">
+      <img src="https://www.soa.org/48ecb4/globalassets/assets/images/logos/soa-logo-primary.svg" 
+           alt="Society of Actuaries Logo" width="140">
+      <br>
+      <a href="Prashant_Adhikari_SOA.pdf" target="_blank" class="transcript-btn">View Official Transcript</a>
+    </div>
+  </div>
+
+  <div class="exam-stage" id="examStage"></div>
+</section>
+
+<style>
+  body {
+    background-color: #e8f2ff;
+    font-family: 'Lato', sans-serif;
+    color: #003366;
+    margin: 0;
+    padding: 40px;
+    text-align: center;
+    overflow-x: hidden;
+  }
+
+  h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+  }
+
+  .exam-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .soa-logo {
+    text-align: center;
+  }
+
+  .soa-logo img {
+    max-width: 150px;
+  }
+
+  .transcript-btn {
+    display: inline-block;
+    background-color: #003366;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 8px;
+    transition: 0.3s;
+  }
+
+  .transcript-btn:hover {
+    background-color: #0055aa;
+  }
+
+  /* Stage layout */
+  .exam-stage {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .exam-card {
+    position: absolute;
+    background-color: #ede7f6;
+    border-radius: 15px;
+    padding: 25px;
+    width: 320px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease;
+  }
+
+  .exam-card.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    z-index: 5;
+  }
+
+  /* Positions for completed exams */
+  .pos1 { top: 20px; left: 20px; }
+  .pos2 { top: 20px; right: 20px; }
+  .pos3 { bottom: 20px; left: 20px; }
+  .pos4 { bottom: 20px; right: 20px; }
+
+  @media (max-width: 800px) {
+    .exam-card { width: 85%; }
+    .exam-header { flex-direction: column; }
+  }
+</style>
+
+<script>
+  const exams = [
+    {
+      title: "Exam P — Probability",
+      desc: "Builds a strong foundation in probability and statistics for modeling uncertain events in insurance and finance."
+    },
+    {
+      title: "Exam FM — Financial Mathematics",
+      desc: "Focuses on time value of money, interest theory, and financial instruments used in actuarial valuations."
+    },
+    {
+      title: "Exam FAM — Financial and Actuarial Mathematics",
+      desc: "Covers pricing and reserving for life-contingent contracts, cash flow models, and interest rate risk management."
+    },
+    {
+      title: "Exam ALTAM — Advanced Long-Term Actuarial Math",
+      desc: "Equips with deep understanding of life insurance, annuity, and pension valuation techniques."
+    },
+    {
+      title: "Exam ASTAM — Advanced Short-Term Actuarial Math",
+      desc: "Focuses on general insurance modeling, claim frequency/severity, and credibility theory."
+    }
+  ];
+
+  let current = 0;
+  const stage = document.getElementById('examStage');
+  const positions = ['pos1', 'pos2', 'pos3', 'pos4'];
+
+  function createCard(exam) {
+    const card = document.createElement('div');
+    card.classList.add('exam-card');
+    card.innerHTML = `<h3>${exam.title}</h3><p>${exam.desc}</p>`;
+    stage.appendChild(card);
+    return card;
+  }
+
+  const cards = exams.map(exam => createCard(exam));
+
+  function showNextExam() {
+    // Clear all active
+    cards.forEach(c => c.classList.remove('active'));
+    
+    // Set positions for previous exams
+    for (let i = 0; i < current; i++) {
+      cards[i].className = 'exam-card ' + (positions[i % positions.length] || '');
+      cards[i].style.opacity = 1;
+      cards[i].style.transform = 'scale(0.8)';
+      cards[i].style.zIndex = 1;
+    }
+
+    // Show current active
+    const activeCard = cards[current];
+    activeCard.className = 'exam-card active';
+
+    // Increment index
+    current++;
+    if (current >= cards.length) current = cards.length - 1; // stop at last one
+  }
+
+  // Initial show
+  showNextExam();
+
+  // Auto advance every 3 seconds until all are shown
+  const interval = setInterval(() => {
+    if (current < cards.length) showNextExam();
+    else clearInterval(interval);
+  }, 3000);
+</script>

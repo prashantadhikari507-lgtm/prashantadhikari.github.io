@@ -178,66 +178,29 @@
       gap: 8px;
     }
 
-    /* Contact section */
-    .contact-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .contact-form {
-      flex: 1 1 300px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      padding: 20px;
-    }
-    .contact-form label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
-    }
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-family: inherit;
-    }
-    .contact-form button {
-      background: #003366;
-      color: #fff;
-      border: none;
-      padding: 8px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .contact-info {
-      flex: 1 1 200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .contact-info a {
-      display: inline-block;
-      margin: 5px;
-    }
-    .contact-icons {
-      font-size: 1.5em;
-      margin-right: 8px;
-    }
+/* Contact section layout */
+.contact-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* align form and info columns to the left */
+  gap: 10px;                   /* tighten the gap between columns */
+}
 
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .about-grid, .contact-grid {
-        flex-direction: column;
-      }
-      .exam-card {
-        min-height: auto;
-      }
+/* Contact info alignment */
+.contact-info {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;     /* left-align text */
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+/* Minimize spacing between contact lines */
+.contact-info p {
+  margin: 4px 0;
+}
+
     }
   </style>
 </head>
@@ -409,17 +372,16 @@ flood-based parametric insurance product with pricing techniques.</p>
       <h2>Contact</h2>
     </div>
     <div class="contact-grid">
-<!-- Contact form configured to use a mailto link -->
 
-      <!-- Contact info -->
-      <div class="contact-info">
-        <p><strong>Email:</strong><br><a href="mailto:padhikari2@student.gsu.edu">prashantadhikari507@gmail.com</a></p>
-        <p><strong>LinkedIn:</strong><br><a href="https://linkedin.com/in/prasadhikari" target="_blank">linkedin.com/in/prasadhikari</a></p>
-        <p><strong>GitHub:</strong><br><a href="https://github.com/prashantadhikari507-lgtm" target="_blank">github.com/prashantadhikari507-lgtm</a></p>
-      </div>
-    </div>
-  </section>
+      
+<!-- Contact info (left-aligned, minimal gaps) -->
+<div class="contact-info">
+  <p><strong>Email:</strong> <a href="mailto:prashantadhikari507@gmail.com">prashantadhikari507@gmail.com</a></p>
+  <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/prasadhikari" target="_blank">linkedin.com/in/prasadhikari</a></p>
+  <p><strong>GitHub:</strong> <a href="https://github.com/prashantadhikari507-lgtm" target="_blank">github.com/prashantadhikari507-lgtm</a></p>
+</div>
 
+      
   <!-- FOOTER -->
   <footer style="text-align:center; padding:20px; font-size:0.85em; color:#666;">
     © 2025 Prashant Adhikari &nbsp;|&nbsp; All rights reserved
